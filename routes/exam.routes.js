@@ -1,0 +1,12 @@
+const express = require("express")
+const router = express.Router()
+const examController = require("../controllers/exam.controller")
+router.post("/",examController.createExam)
+router.get("/",examController.getAllExams)
+router.get("/:id",examController.getExamById)
+router.put("/:id",examController.updateExam)
+router.delete("/:id",examController.deleteExam)
+router.patch("/:id/restore",examController.restoreExam)
+router.get("/:id/questions",examController.getExamQuestions)
+router.get("/:id/questionswithanswers",examController.getExamQuestionsWithAnswers)
+module.exports=router

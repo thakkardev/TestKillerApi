@@ -1,0 +1,10 @@
+const express = require("express")
+const router = express.Router()
+const topicController = require("../controllers/topic.controller")
+router.post('/',topicController.createTopic)
+router.get("/",topicController.getAllTopic)
+router.get("/:id",topicController.getTopicById)
+router.put("/:id",topicController.updateTopic)
+router.delete("/:id",topicController.deleteTopic)
+router.patch("/:id/restore",topicController.restoreTopic)
+module.exports=router
