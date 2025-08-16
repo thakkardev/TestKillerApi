@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
+const cors = require("cors");
 const authRoutes = require("./routes/auth.routes")
 const subjectRoutes = require("./routes/subject.routes")
 const topicRoutes = require("./routes/topic.routes")
@@ -11,6 +12,7 @@ dotenv.config({path:"./config/.env"})
 const app = express()
 
 app.use(express.json())
+app.use(cors());
 app.use('/api',authRoutes)
 app.use('/api/subjects',subjectRoutes)
 app.use('/api/topics',topicRoutes)
