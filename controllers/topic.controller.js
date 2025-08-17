@@ -9,7 +9,7 @@ const createTopic = async (req, res) => {
             res.status(400).json({ message: "Topic name is required" })
         }
         const topicDetails = await topic.create({ subject, topicName })
-        res.status(201).json({ message: 'Topic created', data: topicDetails })
+        res.status(201).json(topicDetails )
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -17,7 +17,7 @@ const createTopic = async (req, res) => {
 const getAllTopic = async (req, res) => {
     try {
         const topics = await topic.find({ isDeleted: false }).populate('subject', 'subjectName')
-        res.status(200).json({ data: topics });
+        res.status(200).json(topics );
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -28,7 +28,7 @@ const getTopicById = async (req, res) => {
         if (!topicDetails || topicDetails.isDeleted) {
             return res.status(404).json({ message: "Topic not found" });
         }
-        res.status(200).json({ data: topicDetails });
+        res.status(200).json(topicDetails );
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -47,7 +47,7 @@ const updateTopic = async (req, res) => {
         if (!topicDetails) {
             return res.status(404).json({ message: "Topic not found" });
         }
-        res.status(200).json({ message: "Topic updated successfully", data: topicDetails });
+        res.status(200).json(topicDetails );
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -62,7 +62,7 @@ const deleteTopic = async (req,res) => {
         if (!topicDetails) {
             return res.status(404).json({ message: "Topic not found" });
         }
-        res.status(200).json({ message: "Topic soft deleted successfully", data: topicDetails });
+        res.status(200).json(topicDetails );
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -77,7 +77,7 @@ const restoreTopic = async (req,res) => {
         if (!topicDetails) {
             return res.status(404).json({ message: "Topic not found" });
         }
-        res.status(200).json({ message: "Topic restored successfully", data: topicDetails });
+        res.status(200).json(topicDetails );
     } catch (error) {
         res.status(500).json({message:error.message})
     }
