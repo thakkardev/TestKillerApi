@@ -11,7 +11,7 @@ const createQuestion = async (req, res) => {
         if (!question || question.trim() == "") {
             res.status(400).json({ message: "Question is required" })
         }
-        if (!option1 || !option2 || !option3 || !option4 ) {
+        if (!option1 || !option2 || !option3 || !option4) {
             res.status(400).json({ message: "All option is required" })
         }
         if (!correctAns) {
@@ -20,77 +20,76 @@ const createQuestion = async (req, res) => {
         if (!difficulty) {
             res.status(400).json({ message: "Difficulty is required" })
         }
-        const questionDetails = await Question.create({subject, topic, question, option1, option2, option3, option4, correctAns, difficulty})
-        res.status(201).json({message:"Question created successfully",data:questionDetails})
+        const questionDetails = await Question.create({ subject, topic, question, option1, option2, option3, option4, correctAns, difficulty })
+        const populatedQuestion = await topic.findById(questionDetails._id).populate("subject").populate("topic");
+        res.status(201).json(populatedQuestion)
+        
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
 }
-const getAllQuestion = async (req,res) => {
+const getAllQuestion = async (req, res) => {
     try {
-        const questions = await Question.find({isDeleted:false}).populate("subject","subjectName").populate("topic","topicName")
-        res.status(200).json({data:questions})
+        const questions = await Question.find({ isDeleted: false }).populate("subject").populate("topic")
+        res.status(200).json(questions )
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({ message: error.message })
     }
 }
-const getQuestionById = async (req,res) => {
+const getQuestionById = async (req, res) => {
     try {
-        const questionDetails = await Question.findById(req.params.id).populate("subject","subjectName").populate("topic","topicName")
-        if(!questionDetails || questionDetails.isDeleted){
-            res.status(404).json({message:"Question not found"})
+        const questionDetails = await Question.findById(req.params.id).populate("subject").populate("topic")
+        if (!questionDetails || questionDetails.isDeleted) {
+            res.status(404).json({ message: "Question not found" })
         }
-        res.status(200).json({data:questionDetails})
+        res.status(200).json(questionDetails )
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({ message: error.message })
     }
 }
-const updateQuestion = async (req,res) => {
+const updateQuestion = async (req, res) => {
     try {
         const questionDetails = await Question.findByIdAndUpdate(
             req.params.id,
             req.body,
-            {new:true}
+            { new: true }
         )
-        if(!questionDetails)
-        {
-            res.status(404).json({message:"Question not found"})
+        if (!questionDetails) {
+            res.status(404).json({ message: "Question not found" })
         }
-        res.status(200).json({message:"Question Updated successfully",data:questionDetails})
+        res.status(200).json({ message: "Question Updated successfully", data: questionDetails })
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({ message: error.message })
     }
 }
-const deleteQuestion = async (req,res) => {
+const deleteQuestion = async (req, res) => {
     try {
         const questionDetails = await Question.findByIdAndUpdate(
             req.params.id,
-            {isDeleted:true,deletedAt:Date.now()},
-            {new:true}
+            { isDeleted: true, deletedAt: Date.now() },
+            { new: true }
         )
-        if(!questionDetails)
-        {
-            res.status(404).json({message:"Question not found"})
+        if (!questionDetails) {
+            res.status(404).json({ message: "Question not found" })
         }
-        res.status(200).json({message:"Question Soft deleted successfully",data:questionDetails})
+        res.status(200).json({ message: "Question deleted successfully"})
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({ message: error.message })
     }
 }
-const restoreQuestion = async (req,res) => {
+const restoreQuestion = async (req, res) => {
     try {
         const questionDetails = await Question.findByIdAndUpdate(
             req.params.id,
-            {isDeleted:false,deletedAt:null},
-            {new:true}
+            { isDeleted: false, deletedAt: null },
+            { new: true }
         )
-        if(!questionDetails)
-        {
-            res.status(404).json({message:"Question not found"})
+        if (!questionDetails) {
+            res.status(404).json({ message: "Question not found" })
         }
-        res.status(200).json({message:"Question restored successfully",data:questionDetails})
+        res.status(200).json({ message: "Question restored successfully"})
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({ message: error.message })
     }
 }
-module.exports={createQuestion,getAllQuestion,getQuestionById,updateQuestion,deleteQuestion,restoreQuestion}
+module.exports = { createQuestion, getAllQuestion, getQuestionById, updateQuestion, deleteQuestion, restoreQuestion }
