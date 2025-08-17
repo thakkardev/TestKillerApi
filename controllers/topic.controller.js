@@ -9,7 +9,8 @@ const createTopic = async (req, res) => {
             res.status(400).json({ message: "Topic name is required" })
         }
         const topicDetails = await topic.create({ subject, topicName })
-        res.status(201).json(topicDetails )
+        const populatedTopic = await topic.findById(topicDetails._id).populate("subject");
+        res.status(201).json(populatedTopic)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
