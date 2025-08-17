@@ -21,7 +21,7 @@ const createQuestion = async (req, res) => {
             res.status(400).json({ message: "Difficulty is required" })
         }
         const questionDetails = await Question.create({ subject, topic, question, option1, option2, option3, option4, correctAns, difficulty })
-        const populatedQuestion = await topic.findById(questionDetails._id).populate("subject").populate("topic");
+        const populatedQuestion = await Question.findById(questionDetails._id).populate("subject").populate("topic");
         res.status(201).json(populatedQuestion)
         
     } catch (error) {
