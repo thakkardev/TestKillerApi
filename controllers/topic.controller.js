@@ -17,7 +17,7 @@ const createTopic = async (req, res) => {
 }
 const getAllTopic = async (req, res) => {
     try {
-        const topics = await topic.find({ isDeleted: false }).populate('subject', 'subjectName')
+        const topics = await topic.find({ isDeleted: false }).populate('subject')
         res.status(200).json(topics );
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -25,7 +25,7 @@ const getAllTopic = async (req, res) => {
 }
 const getTopicById = async (req, res) => {
     try {
-        const topicDetails = await topic.findById(req.params.id).populate('subject', 'subjectName')
+        const topicDetails = await topic.findById(req.params.id).populate('subject')
         if (!topicDetails || topicDetails.isDeleted) {
             return res.status(404).json({ message: "Topic not found" });
         }
