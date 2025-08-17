@@ -30,7 +30,7 @@ const login = async (req,res) => {
         const isMatch = await bcrypt.compare(password,existingUser.password)
         if (!isMatch) return res.status(400).json({message:"Invalid credentials"})
         existingUser.password = undefined;
-        res.status(200).json({message:"Login Successfully",user:{id:existingUser._id,id1:existingUser.id,email:existingUser.email,firstName:existingUser.firstName,lastName:existingUser.lastName,role:existingUser.role,gender:existingUser.gender,contactNo:existingUser.contactNo}})
+        res.status(200).json({message:"Login Successfully",user:{id:existingUser._id,email:existingUser.email,firstName:existingUser.firstName,lastName:existingUser.lastName,role:existingUser.role,gender:existingUser.gender,contactNo:existingUser.contactNo}})
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -38,10 +38,10 @@ const login = async (req,res) => {
 
 const getAllUsers = async (req,res) => {
     try {
-        const users = await user.find().select("-password")
-        res.status(200).json({data:users})
+        const users = await user.find().select("-password").sort({createdAt:-1})
+        res.status(200).json({success:true,count:users.length,data:users})
     } catch (error) {
-        res.status(500).json({message:error.message})
+        res.status(500).json({success:false,message:error.message})
     }
 }
 
