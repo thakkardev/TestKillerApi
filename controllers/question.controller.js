@@ -23,7 +23,6 @@ const createQuestion = async (req, res) => {
         const questionDetails = await Question.create({ subject, topic, question, option1, option2, option3, option4, correctAns, difficulty })
         const populatedQuestion = await Question.findById(questionDetails._id).populate("subject").populate("topic");
         res.status(201).json(populatedQuestion)
-        
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -57,7 +56,8 @@ const updateQuestion = async (req, res) => {
         if (!questionDetails) {
             res.status(404).json({ message: "Question not found" })
         }
-        res.status(200).json({ message: "Question Updated successfully", data: questionDetails })
+        const populatedQuestion = await Question.findById(questionDetails._id).populate("subject").populate("topic");
+        res.status(201).json(populatedQuestion)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
