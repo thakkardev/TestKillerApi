@@ -55,7 +55,7 @@ const deleteSubject = async (req,res) => {
         if (!subjectDetails) {
             return res.status(404).json({ message: "Subject not found" });
         }
-        res.status(200).json({ message: "Subject soft deleted successfully" ,data:subjectDetails});
+        res.status(200).json({ message: "Subject soft deleted successfully"});
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -67,7 +67,7 @@ const restoreSubject = async (req,res) => {
         if (!subjectDetails) {
             return res.status(404).json({ message: "Subject not found" });
         }
-        res.status(200).json({ message: "Subject restored successfully" ,data:subjectDetails});
+        res.status(200).json({ message: "Subject restored successfully"});
     } catch (error) {
         res.status(500).json({message:error.message})
     }

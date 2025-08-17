@@ -48,7 +48,8 @@ const updateTopic = async (req, res) => {
         if (!topicDetails) {
             return res.status(404).json({ message: "Topic not found" });
         }
-        res.status(200).json(topicDetails );
+        const populatedTopic = await topic.findById(topicDetails._id).populate("subject");
+        res.status(200).json(populatedTopic)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -63,7 +64,7 @@ const deleteTopic = async (req,res) => {
         if (!topicDetails) {
             return res.status(404).json({ message: "Topic not found" });
         }
-        res.status(200).json(topicDetails );
+        res.status(200).json({message:"Topic Deleted successfully"} );
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -78,7 +79,7 @@ const restoreTopic = async (req,res) => {
         if (!topicDetails) {
             return res.status(404).json({ message: "Topic not found" });
         }
-        res.status(200).json(topicDetails );
+        res.status(200).json({message:"Topic restored successfully"} );
     } catch (error) {
         res.status(500).json({message:error.message})
     }
