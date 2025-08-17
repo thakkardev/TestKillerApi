@@ -57,7 +57,7 @@ const getAllStudents = async (req,res) => {
 const getAllFaculty = async (req,res) => {
     try {
         const faculty = await user.find({role:"faculty"}).select("-password")
-        res.status(200).json({data:faculty})
+        res.status(200).json(faculty)
     } catch (error) {
         res.status(500).json({message:error.message})
     }

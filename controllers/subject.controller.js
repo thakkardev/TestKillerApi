@@ -6,7 +6,7 @@ const createSubject = async (req,res) => {
             return res.status(400).json({ message: "Subject name is required" });
         }
         const subjectDetails = await subject.create({subjectName})
-        res.status(201).json({message: 'Subject created',data: subjectDetails})
+        res.status(201).json(subjectDetails)
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -15,7 +15,7 @@ const createSubject = async (req,res) => {
 const getAllSubjects = async (req,res) => {
     try {
         const subjects = await subject.find({isDeleted:false})
-        res.status(200).json({data:subjects})
+        res.status(200).json(subjects)
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -27,7 +27,7 @@ const getSubjectById = async (req,res) => {
         if (!subjectDetails || subjectDetails.isDeleted) {
             return res.status(404).json({ message: "Subject not found" });
         }
-        res.status(200).json({data:subjectDetails})
+        res.status(200).json(subjectDetails)
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -43,7 +43,7 @@ const updateSubject = async (req,res) => {
         if (!subjectDetails) {
             return res.status(404).json({ message: "Subject not found" });
         }
-        res.status(200).json({ message: "Subject updated successfully", data: subjectDetails });
+        res.status(200).json(subjectDetails );
     } catch (error) {
         res.status(500).json({message:error.message})
     }
