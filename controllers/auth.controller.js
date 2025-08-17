@@ -16,7 +16,7 @@ const signup = async(req,res)=>{
             contactNo
         })
         newUser.password=undefined
-        res.status(201).json({message:"User Created successfully",data:newUser})
+        res.status(201).json({message:"User Created successfully",user:{id:newUser._id,email:newUser.email,firstName:newUser.firstName,lastName:newUser.lastName,role:newUser.role,batch:newUser.batch,gender:newUser.gender}})
     }catch(error){
         res.status(500).json({message:error.message})
     }

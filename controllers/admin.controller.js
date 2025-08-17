@@ -1,7 +1,6 @@
 const user = require("../models/user")
 const exam = require("../models/exam")
 const bcrypt = require("bcryptjs")
-const { use } = require("../routes/auth.routes")
 const getDashboardStats = async (req, res) => {
     try {
         const adminCount = await user.countDocuments({ role: "admin" })
